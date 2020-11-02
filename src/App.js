@@ -37,7 +37,7 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
-    }, 100);
+    }, 10);
   };
 
   const detect = async (net) => {
@@ -95,7 +95,7 @@ function App() {
     }
   };
 
-  useEffect(()=>{runHandpose()});
+  useEffect(()=>{runHandpose()},[]);
 
   return (
     <div className="App">
