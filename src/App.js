@@ -6,7 +6,7 @@
 // 5. Add emoji display to the screen
 
 ///////// NEW STUFF ADDED USE STATE
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 ///////// NEW STUFF ADDED USE STATE
 
 // import logo from './logo.svg';
@@ -95,7 +95,7 @@ function App() {
     }
   };
 
-  runHandpose();
+  useEffect(()=>{runHandpose()});
 
   return (
     <div className="App">
