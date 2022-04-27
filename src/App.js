@@ -91,6 +91,8 @@ function App() {
 
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
+      ctx.translate(canvasRef.current.width,0)
+      ctx.scale(-1,1)
       drawHand(hand, ctx);
     }
   };
@@ -113,6 +115,7 @@ function App() {
             width: 640,
             height: 480,
           }}
+          mirrored={true}
         />
 
         <canvas
