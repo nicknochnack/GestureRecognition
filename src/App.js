@@ -20,7 +20,12 @@ import { drawHand } from "./utilities";
 import * as fp from "fingerpose";
 import victory from "./victory.png";
 import thumbs_up from "./thumbs_up.png";
+import open_hand from "./open_hand.png";
 ///////// NEW STUFF IMPORTS
+
+import { openHandGesture } from "./openHandGesture";
+import { closedHandGesture } from "./closedHandGesture";
+import { pointGesture } from "./pointGesture";
 
 function App() {
   const webcamRef = useRef(null);
@@ -28,7 +33,11 @@ function App() {
 
   ///////// NEW STUFF ADDED STATE HOOK
   const [emoji, setEmoji] = useState(null);
-  const images = { thumbs_up: thumbs_up, victory: victory };
+  const images = {
+    thumbs_up: thumbs_up,
+    victory: victory,
+    open_hand: open_hand,
+  };
   ///////// NEW STUFF ADDED STATE HOOK
 
   const runHandpose = async () => {
@@ -70,6 +79,9 @@ function App() {
         const GE = new fp.GestureEstimator([
           fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
+          // closedHandGesture,
+          openHandGesture,
+          // pointGesture,
         ]);
         const gesture = await GE.estimate(hand[0].landmarks, 4);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
@@ -81,9 +93,9 @@ function App() {
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
-          // console.log(gesture.gestures[maxConfidence].name);
+
+          console.log(gesture.gestures[maxConfidence].name);
           setEmoji(gesture.gestures[maxConfidence].name);
-          console.log(emoji);
         }
       }
 
@@ -91,13 +103,15 @@ function App() {
 
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
-      ctx.translate(canvasRef.current.width,0)
-      ctx.scale(-1,1)
+      ctx.translate(canvasRef.current.width, 0);
+      ctx.scale(-1, 1);
       drawHand(hand, ctx);
     }
   };
 
-  useEffect(()=>{runHandpose()},[]);
+  useEffect(() => {
+    runHandpose();
+  }, []);
 
   return (
     <div className="App">

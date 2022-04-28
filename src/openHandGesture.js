@@ -7,7 +7,7 @@ import {
 } from "fingerpose";
 
 // Define Gesture Description
-export const openHandGesture = new GestureDescription("open hand");
+export const openHandGesture = new GestureDescription("open_hand");
 
 for (let finger of [
   Finger.Middle,
