@@ -21,11 +21,14 @@ import * as fp from "fingerpose";
 import victory from "./victory.png";
 import thumbs_up from "./thumbs_up.png";
 import open_hand from "./open_hand.png";
+import pointer from "./pointer.png";
+import closed_hand from "./closed_hand.png";
 ///////// NEW STUFF IMPORTS
 
 import { openHandGesture } from "./openHandGesture";
 import { closedHandGesture } from "./closedHandGesture";
 import { pointGesture } from "./pointGesture";
+import { victoryGesture } from "./victoryGesture";
 
 function App() {
   const webcamRef = useRef(null);
@@ -37,6 +40,8 @@ function App() {
     thumbs_up: thumbs_up,
     victory: victory,
     open_hand: open_hand,
+    pointer: pointer,
+    closed_hand: closed_hand,
   };
   ///////// NEW STUFF ADDED STATE HOOK
 
@@ -77,11 +82,12 @@ function App() {
 
       if (hand.length > 0) {
         const GE = new fp.GestureEstimator([
-          fp.Gestures.VictoryGesture,
+          // fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
-          // closedHandGesture,
+          closedHandGesture,
           openHandGesture,
-          // pointGesture,
+          pointGesture,
+          victoryGesture,
         ]);
         const gesture = await GE.estimate(hand[0].landmarks, 4);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
