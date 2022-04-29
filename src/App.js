@@ -25,10 +25,11 @@ import pointer from "./pointer.png";
 import closed_hand from "./closed_hand.png";
 ///////// NEW STUFF IMPORTS
 
-import { openHandGesture } from "./openHandGesture";
-import { closedHandGesture } from "./closedHandGesture";
-import { pointGesture } from "./pointGesture";
-import { victoryGesture } from "./victoryGesture";
+import { openHandGesture } from "./gestures/openHandGesture";
+import { closedHandGesture } from "./gestures/closedHandGesture";
+import { pointGesture } from "./gestures/pointGesture";
+import { victoryGesture } from "./gestures/victoryGesture";
+import { thumbsUpGesture } from "./gestures/thumbsUpGesture";
 
 function App() {
   const webcamRef = useRef(null);
@@ -83,11 +84,12 @@ function App() {
       if (hand.length > 0) {
         const GE = new fp.GestureEstimator([
           // fp.Gestures.VictoryGesture,
-          fp.Gestures.ThumbsUpGesture,
+          // fp.Gestures.ThumbsUpGesture,
           closedHandGesture,
           openHandGesture,
           pointGesture,
           victoryGesture,
+          thumbsUpGesture,
         ]);
         const gesture = await GE.estimate(hand[0].landmarks, 4);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
@@ -156,6 +158,7 @@ function App() {
         {emoji !== null ? (
           <img
             src={images[emoji]}
+            alt="emoji"
             style={{
               position: "absolute",
               marginLeft: "auto",
