@@ -17,6 +17,10 @@ import "./App.css";
 import { drawHand } from "./utilities";
 import * as fp from "fingerpose";
 
+// React Decoration Imports
+import Confetti from "react-dom-confetti";
+import configConfetti from "./reactConfigs";
+
 ///////// PNG Imports
 import open_hand from "./png/open_hand.png";
 import victory from "./png/victory.png";
@@ -36,6 +40,7 @@ import {
   ThumbsDownGesture,
   FistGesture,
 } from "./Gestures";
+
 import { HandDetector } from "@tensorflow-models/handpose/dist/hand";
 
 function App() {
@@ -44,6 +49,8 @@ function App() {
 
   ///////// NEW STUFF ADDED STATE HOOK
   const [emoji, setEmoji] = useState(null);
+  const [explosion, setExplosion] = useState(false);
+
   const images = {
     open_hand: open_hand,
     victory: victory,
@@ -104,14 +111,14 @@ function App() {
           FistGesture,
         ]);
 
-        // 6 is the minimum score it's looking for
+        // 2nd arg is the minimum score it's looking for
         const gesture = await GE.estimate(hand[0].landmarks, 7);
 
         if (gesture.gestures === undefined) {
           console.log("no hand");
           setEmoji("");
         } else if (gesture.gestures.length > 0) {
-          console.log(gesture.gestures);
+          // console.log(gesture.gestures);
 
           const confidence = gesture.gestures.map(
             (prediction) => prediction.confidence
@@ -122,6 +129,15 @@ function App() {
 
           console.log(gesture.gestures[maxConfidence].name);
           setEmoji(gesture.gestures[maxConfidence].name);
+
+          switch (gesture.gestures[maxConfidence].name) {
+            case "open_hand":
+              setExplosion(true);
+              break;
+            default:
+              setExplosion(false);
+              break;
+          }
         }
       }
 
@@ -192,6 +208,8 @@ function App() {
         ) : (
           ""
         )}
+
+        <Confetti active={explosion} config={configConfetti} />
 
         {/* NEW STUFF */}
       </header>

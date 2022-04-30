@@ -11,6 +11,7 @@
     "fingerpose": "^0.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dom-confetti": "^0.2.0",
     "react-scripts": "3.4.3",
     "react-webcam": "^5.2.0"
   },

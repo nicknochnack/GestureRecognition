@@ -4058,6 +4058,11 @@
   "resolved" "https://registry.npmjs.org/dom-accessibility-api/-/dom-accessibility-api-0.3.0.tgz"
   "version" "0.3.0"
 
+"dom-confetti@0.2.2":
+  "integrity" "sha512-+UVH9Y85qmpTnbmFURwLWjqLIykyIrsNSRkPX/eFlBuOURz9RDX8JoZHnajZHyFuCV0w/K3+tZK0ztfoTw6ejg=="
+  "resolved" "https://registry.npmjs.org/dom-confetti/-/dom-confetti-0.2.2.tgz"
+  "version" "0.2.2"
+
 "dom-converter@^0.2":
   "integrity" "sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA=="
   "resolved" "https://registry.npmjs.org/dom-converter/-/dom-converter-0.2.0.tgz"
@@ -8979,6 +8984,13 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
+"react-dom-confetti@^0.2.0":
+  "integrity" "sha512-+XRTi+WlCrcRN2dTjdEopOaPFtS7hpaHRRQ0sHiVRGqpchKz4QVh3i+6eLEEpNHYpN2VgPmhjvJ/vnjmUYhlIQ=="
+  "resolved" "https://registry.npmjs.org/react-dom-confetti/-/react-dom-confetti-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "dom-confetti" "0.2.2"
+
 "react-dom@*", "react-dom@^16.13.1", "react-dom@>=15.3.0":
   "integrity" "sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-16.13.1.tgz"
@@ -8998,6 +9010,11 @@
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
+
+"react-rain-animation@^1.0.4":
+  "integrity" "sha1-y+TJbVglIRo837pmdNdK/IsjU8k="
+  "resolved" "https://registry.npmjs.org/react-rain-animation/-/react-rain-animation-1.0.4.tgz"
+  "version" "1.0.4"
 
 "react-scripts@3.4.3":
   "integrity" "sha512-oSnoWmii/iKdeQiwaO6map1lUaZLmG0xIUyb/HwCVFLT7gNbj8JZ9RmpvMCZ4fB98ZUMRfNmp/ft8uy/xD1RLA=="
