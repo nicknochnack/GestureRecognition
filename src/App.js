@@ -15,21 +15,28 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import "./App.css";
 import { drawHand } from "./utilities";
-
-///////// NEW STUFF IMPORTS
 import * as fp from "fingerpose";
-import victory from "./victory.png";
-import thumbs_up from "./thumbs_up.png";
-import open_hand from "./open_hand.png";
-import pointer from "./pointer.png";
-import closed_hand from "./closed_hand.png";
-///////// NEW STUFF IMPORTS
 
-import { openHandGesture } from "./gestures/openHandGesture";
-import { closedHandGesture } from "./gestures/closedHandGesture";
-import { pointGesture } from "./gestures/pointGesture";
-import { victoryGesture } from "./gestures/victoryGesture";
-import { thumbsUpGesture } from "./gestures/thumbsUpGesture";
+///////// PNG Imports
+import open_hand from "./png/open_hand.png";
+import victory from "./png/victory.png";
+import pointer from "./png/pointer.png";
+import rad from "./png/rad.png";
+import thumbs_up from "./png/thumbs_up.png";
+import thumbs_down from "./png/thumbs_down.png";
+import fist from "./png/fist.png";
+
+///////// Gesture Imports
+import {
+  OpenHandGesture,
+  VictoryGesture,
+  PointerGesture,
+  RadGesture,
+  ThumbsUpGesture,
+  ThumbsDownGesture,
+  FistGesture,
+} from "./Gestures";
+import { HandDetector } from "@tensorflow-models/handpose/dist/hand";
 
 function App() {
   const webcamRef = useRef(null);
@@ -38,24 +45,27 @@ function App() {
   ///////// NEW STUFF ADDED STATE HOOK
   const [emoji, setEmoji] = useState(null);
   const images = {
-    thumbs_up: thumbs_up,
-    victory: victory,
     open_hand: open_hand,
+    victory: victory,
     pointer: pointer,
-    closed_hand: closed_hand,
+    rad: rad,
+    thumbs_up: thumbs_up,
+    thumbs_down: thumbs_down,
+    fist: fist,
   };
   ///////// NEW STUFF ADDED STATE HOOK
 
   const runHandpose = async () => {
-    const net = await handpose.load();
+    console.log("Loading handpose model...");
+    const handposeModel = await handpose.load();
     console.log("Handpose model loaded.");
     //  Loop and detect hands
     setInterval(() => {
-      detect(net);
-    }, 10);
+      detect(handposeModel);
+    }, 20);
   };
 
-  const detect = async (net) => {
+  const detect = async (handposeModel) => {
     // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -76,24 +86,32 @@ function App() {
       canvasRef.current.height = videoHeight;
 
       // Make Detections
-      const hand = await net.estimateHands(video);
+      // 2nd argument false: flipHorizontal
+      const hand = await handposeModel.estimateHands(video, false);
       // console.log(hand);
 
       ///////// NEW STUFF ADDED GESTURE HANDLING
 
       if (hand.length > 0) {
+        // GE: Gesture Estimator
         const GE = new fp.GestureEstimator([
-          // fp.Gestures.VictoryGesture,
-          // fp.Gestures.ThumbsUpGesture,
-          closedHandGesture,
-          openHandGesture,
-          pointGesture,
-          victoryGesture,
-          thumbsUpGesture,
+          OpenHandGesture,
+          VictoryGesture,
+          // PointerGesture,
+          RadGesture,
+          ThumbsUpGesture,
+          // ThumbsDownGesture,
+          FistGesture,
         ]);
-        const gesture = await GE.estimate(hand[0].landmarks, 4);
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          // console.log(gesture.gestures);
+
+        // 6 is the minimum score it's looking for
+        const gesture = await GE.estimate(hand[0].landmarks, 7);
+
+        if (gesture.gestures === undefined) {
+          console.log("no hand");
+          setEmoji("");
+        } else if (gesture.gestures.length > 0) {
+          console.log(gesture.gestures);
 
           const confidence = gesture.gestures.map(
             (prediction) => prediction.confidence
@@ -154,6 +172,7 @@ function App() {
             height: 480,
           }}
         />
+
         {/* NEW STUFF */}
         {emoji !== null ? (
           <img
