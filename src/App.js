@@ -40,6 +40,7 @@ import {
   ThumbsDownGesture,
   FistGesture,
 } from "./Gestures";
+import './styles/index.scss'
 
 import { HandDetector } from "@tensorflow-models/handpose/dist/hand";
 
@@ -50,7 +51,13 @@ function App() {
   ///////// NEW STUFF ADDED STATE HOOK
   const [emoji, setEmoji] = useState(null);
   const [explosion, setExplosion] = useState(false);
-
+  let initialGestureArray = []
+  for (let i=0;i<10;i++){
+    initialGestureArray.push("")
+  }
+  const [gestureQueue, setGestures] = useState(initialGestureArray)
+  // const [timerRingOffset,settimerRingOffset] = useState(0)
+  // const [gestureDuration,setGestureDuration] = useState(0)
   const images = {
     open_hand: open_hand,
     victory: victory,
@@ -60,6 +67,15 @@ function App() {
     thumbs_down: thumbs_down,
     fist: fist,
   };
+
+  // const $timerRing = document.querySelector('#timer-ring')
+  // const $timerRingCircle = document.querySelector('#timer-ring-circle')
+  const radius = 38
+  const circumference = (radius * 2 * Math.PI)
+
+  // $timerRingCircle.style.strokeDasharray = `${circumference} ${circumference}`
+  // $timerRingCircle.style.strokeDashoffset = `${circumference}`  
+  
   ///////// NEW STUFF ADDED STATE HOOK
 
   const runHandpose = async () => {
@@ -69,11 +85,12 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(handposeModel);
-    }, 20);
+  }, 10);
   };
 
   const detect = async (handposeModel) => {
     // Check data is available
+    const predictionStartTS = Date.now()
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -113,10 +130,14 @@ function App() {
 
         // 2nd arg is the minimum score it's looking for
         const gesture = await GE.estimate(hand[0].landmarks, 7);
-
         if (gesture.gestures === undefined) {
           console.log("no hand");
           setEmoji("");
+          // setGestureDuration(0);
+          setGestures((gestureQueue)=>{
+            let prevGestures = gestureQueue.slice(1)
+            prevGestures.push("")
+            return(prevGestures)})
         } else if (gesture.gestures.length > 0) {
           // console.log(gesture.gestures);
 
@@ -127,7 +148,36 @@ function App() {
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture.gestures[maxConfidence].name);
+          // MOST LIKELY CURRENT GESTURE IS gesture.gestures[maxConfidence].name
+          // Ideally our gesturesQueue would update the end with this...and remove the 0 index.... but it doesn't for some reason.
+          
+          // let prevGestures = gestureQueue.slice(1);
+          // prevGestures.push(gesture.gestures[maxConfidence].name)
+          setGestures((gestureQueue)=>{
+            let prevGestures = gestureQueue.slice(1)
+            prevGestures.push(gesture.gestures[maxConfidence].name)
+          console.log(gestureQueue)
+            return(prevGestures)})
+          console.log(gestureQueue)
+          // console.log(prevGestures,gestureQueue);
+          //The goal is then to take the mode of the first half and second half to determine if gesture changed.
+        //   function mode(arr){
+        //     return arr.sort((a,b) =>
+        //           arr.filter(v => v===a).length
+        //         - arr.filter(v => v===b).length
+        //     ).pop();
+        // }
+        // prevGestureMode = mode(gesturesQueue.slice(0,5))
+        // currentGestureMode = mode(gesturesQueue.slice(5))
+        //  then we want to use these modes to see if we add to duration timer or change background/emoji in response
+          //if (prevGesture===lastGesture){
+            // add to duration timer
+            // const deltaTime = Date.now() - predictionStartTS
+            // gestureDuration += deltaTime
+          // }
+          //if (prevGesture!==lastGesture){
+            // setEmoji/Canvas Element
+          // }
           setEmoji(gesture.gestures[maxConfidence].name);
 
           switch (gesture.gestures[maxConfidence].name) {
@@ -139,8 +189,13 @@ function App() {
               break;
           }
         }
+      }else{
+        setGestures((gestureQueue)=>{
+          let prevGestures = gestureQueue.slice(1)
+          prevGestures.push("")
+          return(prevGestures)})
       }
-
+      console.log(gestureQueue)
       ///////// NEW STUFF ADDED GESTURE HANDLING
 
       // Draw mesh
@@ -148,12 +203,44 @@ function App() {
       ctx.translate(canvasRef.current.width, 0);
       ctx.scale(-1, 1);
       drawHand(hand, ctx);
+      
     }
   };
 
   useEffect(() => {
     runHandpose();
-  }, []);
+  },[]);
+
+  const renderCircleTimer=()=>{ //I don't think we really need this... the smoothed gesture array makes more sense
+    return(
+    <div className="player-hand-container">
+    {/* <!-- shows the current recognized gesture --> */}
+    <div id="player-hand" className="player-hand"></div>
+
+    {/* <!-- show the timer progress --> */}
+    <svg id="timer-ring" className="timer-ring" height="100" width="100" strokeDasharray={circumference+" "+circumference}>
+      <circle
+        className="timer-ring-circle"
+        strokeWidth="6"
+        stroke="white"
+        fill="transparent"
+        r="38"
+        cx="50"
+        cy="50"
+      />
+      <circle
+        id="timer-ring-circle"
+        className="timer-ring-circle"
+        strokeWidth="6"
+        stroke="blue"
+        fill="transparent"
+        r="38"
+        cx="50"
+        cy="50"
+      />
+    </svg>
+  </div>)
+  }
 
   return (
     <div className="App">
@@ -188,7 +275,7 @@ function App() {
             height: 480,
           }}
         />
-
+        
         {/* NEW STUFF */}
         {emoji !== null ? (
           <img
