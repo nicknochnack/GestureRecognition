@@ -9011,11 +9011,6 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
-"react-rain-animation@^1.0.4":
-  "integrity" "sha1-y+TJbVglIRo837pmdNdK/IsjU8k="
-  "resolved" "https://registry.npmjs.org/react-rain-animation/-/react-rain-animation-1.0.4.tgz"
-  "version" "1.0.4"
-
 "react-scripts@3.4.3":
   "integrity" "sha512-oSnoWmii/iKdeQiwaO6map1lUaZLmG0xIUyb/HwCVFLT7gNbj8JZ9RmpvMCZ4fB98ZUMRfNmp/ft8uy/xD1RLA=="
   "resolved" "https://registry.npmjs.org/react-scripts/-/react-scripts-3.4.3.tgz"

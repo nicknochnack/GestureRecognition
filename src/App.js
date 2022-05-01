@@ -19,7 +19,7 @@ import * as fp from "fingerpose";
 
 // React Decoration Imports
 import Confetti from "react-dom-confetti";
-import configConfetti from "./reactConfigs";
+import { configConfetti, configMonochrome } from "./reactConfigs";
 
 ///////// PNG Imports
 import open_hand from "./png/open_hand.png";
@@ -50,6 +50,7 @@ function App() {
   ///////// NEW STUFF ADDED STATE HOOK
   const [emoji, setEmoji] = useState(null);
   const [explosion, setExplosion] = useState(false);
+  const [explosionConfig, setExplosionConfig] = useState(null);
 
   const images = {
     open_hand: open_hand,
@@ -132,6 +133,11 @@ function App() {
 
           switch (gesture.gestures[maxConfidence].name) {
             case "open_hand":
+              setExplosionConfig(configConfetti);
+              setExplosion(true);
+              break;
+            case "rad":
+              setExplosionConfig(configMonochrome);
               setExplosion(true);
               break;
             default:
@@ -209,7 +215,7 @@ function App() {
           ""
         )}
 
-        <Confetti active={explosion} config={configConfetti} />
+        <Confetti active={explosion} config={explosionConfig} />
 
         {/* NEW STUFF */}
       </header>
