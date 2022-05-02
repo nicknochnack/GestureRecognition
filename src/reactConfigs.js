@@ -33,8 +33,8 @@ const configColor1 = {
   dragFriction: 0.12,
   duration: 3000,
   stagger: "46",
-  width: "20px",
-  height: "20px",
+  width: "40px",
+  height: "40px",
   perspective: "1000px",
   colors: ["#7785AC", "#5B2A86", "#9AC6C5"],
 };
@@ -59,8 +59,8 @@ const configColor3 = {
   dragFriction: 0.12,
   duration: 3000,
   stagger: "46",
-  width: "20px",
-  height: "20px",
+  width: "100px",
+  height: "10px",
   perspective: "1000px",
   colors: ["#F7B801", "#F18701", "#F35B04"],
 };

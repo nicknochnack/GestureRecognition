@@ -12,6 +12,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dom-confetti": "^0.2.0",
+    "react-rain-animation": "^1.0.4",
     "react-scripts": "3.4.3",
     "react-webcam": "^5.2.0",
     "sass": "^1.51.0"

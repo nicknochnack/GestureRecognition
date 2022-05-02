@@ -29,7 +29,8 @@ import rad from "./png/rad.png";
 import thumbs_up from "./png/thumbs_up.png";
 import thumbs_down from "./png/thumbs_down.png";
 import fist from "./png/fist.png";
-
+import ReactRain from "react-rain-animation"
+import "react-rain-animation/lib/style.css"
 ///////// Gesture Imports
 import {
   OpenHandGesture,
@@ -59,7 +60,7 @@ function App() {
   // const [timerRingOffset,settimerRingOffset] = useState(0)
   // const [gestureDuration,setGestureDuration] = useState(0)
   const [explosionConfig, setExplosionConfig] = useState(null);
-
+  const [rain,setRain] = useState(0);
   const images = {
     open_hand: open_hand,
     victory: victory,
@@ -199,8 +200,9 @@ function App() {
               setExplosion(true);
               break;
             case "fist":
-              setExplosionConfig(configColor3);
-              setExplosion(true);
+              // setExplosionConfig(configColor3);
+              // setExplosion(true);
+              setRain(rain+5)
               break
             default:
               break;
@@ -230,6 +232,7 @@ function App() {
 
   useEffect(()=>{
     setExplosion(false)
+    setRain(0)
   },[emoji])
   const renderAnimations = (gesture) =>{
     // let output
@@ -247,7 +250,9 @@ function App() {
     // }
     // setExplosion(false)
     return(
+      <div>
       <Confetti active={explosion} config={explosionConfig} />
+      </div>
     )
   }
   const renderCircleTimer=()=>{ //I don't think we really need this... the smoothed gesture array makes more sense
@@ -336,6 +341,7 @@ function App() {
         )}  
         {/* <Confetti active={explosion} config={configConfetti} /> */}
         {renderAnimations(emoji)}
+        <ReactRain numDrops = {500}/>
 
         {/* <Confetti active={explosion} config={explosionConfig} /> */}
 
