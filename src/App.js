@@ -19,7 +19,7 @@ import * as fp from "fingerpose";
 
 // React Decoration Imports
 import Confetti from "react-dom-confetti";
-import configConfetti from "./reactConfigs";
+import { configConfetti, configMonochrome, configColor1, configColor2, configColor3 } from "./reactConfigs";
 
 ///////// PNG Imports
 import open_hand from "./png/open_hand.png";
@@ -58,6 +58,8 @@ function App() {
   const [gestureQueue, setGestures] = useState(initialGestureArray)
   // const [timerRingOffset,settimerRingOffset] = useState(0)
   // const [gestureDuration,setGestureDuration] = useState(0)
+  const [explosionConfig, setExplosionConfig] = useState(null);
+
   const images = {
     open_hand: open_hand,
     victory: victory,
@@ -181,10 +183,26 @@ function App() {
 
           switch (gesture.gestures[maxConfidence].name) {
             case "open_hand":
+              setExplosionConfig(configConfetti);
               setExplosion(true);
               break;
+            case "rad":
+              setExplosionConfig(configMonochrome);
+              setExplosion(true);
+              break;
+            case "victory":
+              setExplosionConfig(configColor1);
+              setExplosion(true);
+              break;
+            case "thumbs_up":
+              setExplosionConfig(configColor2);
+              setExplosion(true);
+              break;
+            case "fist":
+              setExplosionConfig(configColor3);
+              setExplosion(true);
+              break
             default:
-              setExplosion(false);
               break;
           }
         }
@@ -210,6 +228,9 @@ function App() {
     runHandpose();
   },[]);
 
+  useEffect(()=>{
+    setExplosion(false)
+  },[emoji])
   const renderAnimations = (gesture) =>{
     // let output
     // switch (gesture) {
@@ -224,8 +245,9 @@ function App() {
     // default:
     //  break
     // }
+    // setExplosion(false)
     return(
-      <Confetti active={explosion} config={configConfetti} />
+      <Confetti active={explosion} config={explosionConfig} />
     )
   }
   const renderCircleTimer=()=>{ //I don't think we really need this... the smoothed gesture array makes more sense
@@ -314,6 +336,9 @@ function App() {
         )}  
         {/* <Confetti active={explosion} config={configConfetti} /> */}
         {renderAnimations(emoji)}
+
+        {/* <Confetti active={explosion} config={explosionConfig} /> */}
+
         {/* NEW STUFF */}
       </header>
     </div>
