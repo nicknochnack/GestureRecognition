@@ -139,7 +139,6 @@ function App() {
             prevGestures.push("")
             return(prevGestures)})
         } else if (gesture.gestures.length > 0) {
-          // console.log(gesture.gestures);
 
           const confidence = gesture.gestures.map(
             (prediction) => prediction.confidence
@@ -158,8 +157,8 @@ function App() {
             prevGestures.push(gesture.gestures[maxConfidence].name)
           console.log(gestureQueue)
             return(prevGestures)})
-          console.log(gestureQueue)
-          // console.log(prevGestures,gestureQueue);
+          // console.log(gestureQueue)
+          
           //The goal is then to take the mode of the first half and second half to determine if gesture changed.
         //   function mode(arr){
         //     return arr.sort((a,b) =>
@@ -190,12 +189,12 @@ function App() {
           }
         }
       }else{
+        setEmoji("")
         setGestures((gestureQueue)=>{
           let prevGestures = gestureQueue.slice(1)
           prevGestures.push("")
           return(prevGestures)})
       }
-      console.log(gestureQueue)
       ///////// NEW STUFF ADDED GESTURE HANDLING
 
       // Draw mesh
@@ -211,6 +210,24 @@ function App() {
     runHandpose();
   },[]);
 
+  const renderAnimations = (gesture) =>{
+    // let output
+    // switch (gesture) {
+    // case "closed_hand":
+    //   return(
+    //     <Confetti active={false} config={configConfetti} />
+    //   )
+    // case "open_hand":
+    //   return(
+    //     <Confetti active={true} config={configConfetti} />
+    //   )
+    // default:
+    //  break
+    // }
+    return(
+      <Confetti active={explosion} config={configConfetti} />
+    )
+  }
   const renderCircleTimer=()=>{ //I don't think we really need this... the smoothed gesture array makes more sense
     return(
     <div className="player-hand-container">
@@ -280,7 +297,7 @@ function App() {
         {emoji !== null ? (
           <img
             src={images[emoji]}
-            alt="emoji"
+            alt="No Gesture Found"
             style={{
               position: "absolute",
               marginLeft: "auto",
@@ -294,10 +311,9 @@ function App() {
           />
         ) : (
           ""
-        )}
-
-        <Confetti active={explosion} config={configConfetti} />
-
+        )}  
+        {/* <Confetti active={explosion} config={configConfetti} /> */}
+        {renderAnimations(emoji)}
         {/* NEW STUFF */}
       </header>
     </div>
