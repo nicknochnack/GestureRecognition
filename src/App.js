@@ -25,15 +25,25 @@ import thumbs_up from "./thumbs_up.png";
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [score, setScore] = useState(0);
 
-  ///////// NEW STUFF ADDED STATE HOOK
-  const [emoji, setEmoji] = useState(null);
-  const images = { thumbs_up: thumbs_up, victory: victory };
-  ///////// NEW STUFF ADDED STATE HOOK
+  let url =
+    "https://i.pinimg.com/originals/7d/e7/e9/7de7e9bffd27ec9538445e3bdb2226a7.png";
+  let array = [];
+  let circle = [];
+  let index = 0;
+  let lastX = -1;
+  let lastY = -1;
+
+  for (let i = 0; i < 30 * 3.14 * 2; i++) {
+    let x = -Math.sin(i / 30) * 4;
+    let y = -Math.cos(i / 30) * 4;
+    circle.push({ x, y });
+  }
 
   const runHandpose = async () => {
     const net = await handpose.load();
-    console.log("Handpose model loaded.");
+
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
@@ -65,41 +75,90 @@ function App() {
       // console.log(hand);
 
       ///////// NEW STUFF ADDED GESTURE HANDLING
-
-      if (hand.length > 0) {
-        const GE = new fp.GestureEstimator([
-          fp.Gestures.VictoryGesture,
-          fp.Gestures.ThumbsUpGesture,
-        ]);
-        const gesture = await GE.estimate(hand[0].landmarks, 4);
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          // console.log(gesture.gestures);
-
-          const confidence = gesture.gestures.map(
-            (prediction) => prediction.confidence
-          );
-          const maxConfidence = confidence.indexOf(
-            Math.max.apply(null, confidence)
-          );
-          // console.log(gesture.gestures[maxConfidence].name);
-          setEmoji(gesture.gestures[maxConfidence].name);
-          console.log(emoji);
+      const ctx = canvasRef.current.getContext("2d");
+      if (array.length > 0) {
+        ctx.beginPath();
+        ctx.fillStyle = "Black";
+        ctx.lineWidth = 15;
+        ctx.moveTo(array[0].x, array[0].y);
+        for (let { x, y } of array) {
+          ctx.lineTo(x, y);
         }
+        ctx.stroke();
+        ctx.closePath();
       }
 
-      ///////// NEW STUFF ADDED GESTURE HANDLING
+      if (hand.length > 0) {
+        ///////// NEW STUFF ADDED GESTURE HANDLING
 
-      // Draw mesh
-      const ctx = canvasRef.current.getContext("2d");
-      drawHand(hand, ctx);
+        // Draw mesh
+
+        let centerX = 0;
+        let centerY = 0;
+        let centerZ = 0;
+        console.log(hand[0].landmarks);
+        for (let [x, y, z] of hand[0].landmarks) {
+          centerX += x * 1;
+          centerY += y * 1;
+          centerZ += z * 1;
+        }
+        centerX = centerX / 21;
+        centerY = centerY / 21;
+        centerZ = centerZ / 21;
+
+        array.push({ x: centerX, y: centerY });
+        ctx.beginPath();
+        ctx.fillStyle = "green";
+        ctx.arc(centerX, centerY, 10, 0, 2 * 3.14);
+
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.lineWidth = "3";
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(
+          centerX + circle[index].x * 10,
+          centerY + circle[index].y * 10
+        );
+        index += 5;
+        if (index >= circle.length) {
+          index = 0;
+          array = [];
+          setScore(0);
+        }
+        ctx.stroke();
+        ctx.closePath();
+
+        if (lastX > 0) {
+          let dx = centerX - lastX;
+          let dy = centerY - lastY;
+          let [dx2, dy2] = [circle[index].x, circle[index].y];
+          let len = Math.sqrt(dx * dx + dy * dy);
+
+          let len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+          let tempScore = (dx * dx2 + dy * dy2) / (len * len2);
+          setScore(score + tempScore);
+        }
+
+        lastX = centerX;
+        lastY = centerY;
+        /// drawHand(hand, ctx);
+      }
     }
   };
 
-  useEffect(()=>{runHandpose()},[]);
+  useEffect(() => {
+    runHandpose();
+  }, []);
 
   return (
     <div className="App">
+      <h1 style={{ color: "orange" }}>{score}</h1>
       <header className="App-header">
+        <img src={url} style={{ zIndex: 1000, width: 100, height: 100 }} />
         <Webcam
           ref={webcamRef}
           style={{
@@ -110,7 +169,7 @@ function App() {
             right: 0,
             textAlign: "center",
             zindex: 9,
-            width: 640,
+            width: -640,
             height: 480,
           }}
         />
@@ -129,26 +188,6 @@ function App() {
             height: 480,
           }}
         />
-        {/* NEW STUFF */}
-        {emoji !== null ? (
-          <img
-            src={images[emoji]}
-            style={{
-              position: "absolute",
-              marginLeft: "auto",
-              marginRight: "auto",
-              left: 400,
-              bottom: 500,
-              right: 0,
-              textAlign: "center",
-              height: 100,
-            }}
-          />
-        ) : (
-          ""
-        )}
-
-        {/* NEW STUFF */}
       </header>
     </div>
   );
