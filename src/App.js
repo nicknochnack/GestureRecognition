@@ -1,7 +1,25 @@
+// 0. Install fingerpose npm install fingerpose
+// 1. Add Use State
+// 2. Import emojis and finger pose import * as fp from "fingerpose";
+// 3. Setup hook and emoji object
+// 4. Update detect function for gesture handling
+// 5. Add emoji display to the screen
+
+///////// NEW STUFF ADDED USE STATE
 import React, { useRef, useState, useEffect } from "react";
+///////// NEW STUFF ADDED USE STATE
+
+// import logo from './logo.svg';
+import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import "./App.css";
+import { drawHand } from "./utilities";
+
+///////// NEW STUFF IMPORTS
+import * as fp from "fingerpose";
+import victory from "./victory.png";
+import thumbs_up from "./thumbs_up.png";
 
 function App() {
   const webcamRef = useRef(null);
@@ -32,19 +50,29 @@ function App() {
   };
 
   const detect = async (net) => {
+    // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
+      // Get Video Properties
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
+
+      // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
+
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
+
+      // Make Detections
       const hand = await net.estimateHands(video);
+      // console.log(hand);
+
+      ///////// NEW STUFF ADDED GESTURE HANDLING
       const ctx = canvasRef.current.getContext("2d");
       if (array.length > 0) {
         ctx.beginPath();
@@ -57,10 +85,16 @@ function App() {
         ctx.stroke();
         ctx.closePath();
       }
+
       if (hand.length > 0) {
+        ///////// NEW STUFF ADDED GESTURE HANDLING
+
+        // Draw mesh
+
         let centerX = 0;
         let centerY = 0;
         let centerZ = 0;
+        console.log(hand[0].landmarks);
         for (let [x, y, z] of hand[0].landmarks) {
           centerX += (640 - x) * 1;
           centerY += y * 1;
@@ -69,12 +103,15 @@ function App() {
         centerX = centerX / 21;
         centerY = centerY / 21;
         centerZ = centerZ / 21;
+
         array.push({ x: centerX, y: centerY });
         ctx.beginPath();
         ctx.fillStyle = "green";
         ctx.arc(centerX, centerY, 10, 0, 2 * 3.14);
+
         ctx.fill();
         ctx.closePath();
+
         ctx.beginPath();
         ctx.lineWidth = "3";
         ctx.strokeStyle = "red";
@@ -92,17 +129,21 @@ function App() {
         }
         ctx.stroke();
         ctx.closePath();
+
         if (lastX > 0) {
           let dx = centerX - lastX;
           let dy = centerY - lastY;
           let [dx2, dy2] = [circle[index].x, circle[index].y];
           let len = Math.sqrt(dx * dx + dy * dy);
+
           let len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
           let tempScore = (dx * dx2 + dy * dy2) / (len * len2);
           setScore(score + tempScore);
         }
+
         lastX = centerX;
         lastY = centerY;
+        /// drawHand(hand, ctx);
       }
     }
   };
