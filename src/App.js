@@ -28,7 +28,7 @@ function App() {
 
   let url =
     "https://i.pinimg.com/originals/7d/e7/e9/7de7e9bffd27ec9538445e3bdb2226a7.png";
-  let array = [];
+  let array = []; // this array will collect points for shapes, [x,y]
   let circle = [];
   let index = 0;
   let lastX = -1;
@@ -38,6 +38,37 @@ function App() {
     let x = -Math.sin(i / 30) * 4;
     let y = -Math.cos(i / 30) * 4;
     circle.push({ x, y });
+  }
+
+  const evaluateCircle=(array)=>{
+///calculate the area of the shape
+///calculate the parameter of the shope
+///A/P^2  =1/(4*PI)
+let p=0;
+for(let i=1;i<array.length;i++){
+                      //dx              *    dx                    +       dy                *     dy
+  p +=Math.sqrt((array[i].x-array[i-1].x)*(array[i].x-array[i-1].x)+(array[i].y-array[i-1].y)*(array[i].y-array[i-1].y))
+}
+let centerX=0
+let centerY=0
+for(let {x,y} of array){
+   centerX+=x;centerY+=y;
+}
+centerX /=array.length;centerY /=array.length;
+
+for(let i=1;i<array.length;i++){
+
+///center
+///array[i-1]
+///arrat[i]
+let x1=centerX;let y1=centerY;
+let x2=array[i-1].x;let y2=array[i-1].y
+let x3=array[i].x;let y3=array[i].y
+
+
+
+}
+
   }
 
   const runHandpose = async () => {
@@ -94,7 +125,7 @@ function App() {
         let centerX = 0;
         let centerY = 0;
         let centerZ = 0;
-        console.log(hand[0].landmarks);
+       // console.log(hand[0].landmarks);
         for (let [x, y, z] of hand[0].landmarks) {
           centerX += (640 - x) * 1;
           centerY += y * 1;
@@ -105,6 +136,13 @@ function App() {
         centerZ = centerZ / 21;
 
         array.push({ x: centerX, y: centerY });
+        if(Math.sqrt((centerX-array[0].x)*(centerX-array[0].x)+(centerY-array[0].y)*(centerY-array[0].y))<10 && index>5){
+          console.log("close the shape")
+          index=0;
+          array=[]
+
+          ///evaluate the shape
+        }
         ctx.beginPath();
         ctx.fillStyle = "green";
         ctx.arc(centerX, centerY, 10, 0, 2 * 3.14);
@@ -122,11 +160,7 @@ function App() {
           centerY + circle[index].y * 10
         );
         index += 1;
-        if (index >= circle.length) {
-          index = 0;
-          array = [];
-          setScore(0);
-        }
+   
         ctx.stroke();
         ctx.closePath();
 
@@ -156,7 +190,7 @@ function App() {
     <div className="App">
       <h1 style={{ color: "orange" }}>{score}</h1>
       <header className="App-header">
-        <img src={url} style={{ zIndex: 1000, width: 100, height: 100 }} />
+       
         <Webcam
           ref={webcamRef}
           style={{
