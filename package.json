@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tensorflow-models/face-landmarks-detection": "^1.0.2",
+    "@tensorflow-models/facemesh": "^0.0.5",
     "@tensorflow-models/handpose": "0.0.6",
     "@tensorflow/tfjs": "^2.4.0",
     "@testing-library/jest-dom": "^4.2.4",

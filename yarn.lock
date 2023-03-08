@@ -1475,6 +1475,16 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^3.0.0"
 
+"@mediapipe/face_detection@~0.4.0":
+  "integrity" "sha512-aeCN+fRAojv9ch3NXorP6r5tcGVLR3/gC1HmtqB0WEZBRXrdP6/3W/sGR0dHr1iT6ueiK95G9PVjbzFosf/hrg=="
+  "resolved" "https://registry.npmjs.org/@mediapipe/face_detection/-/face_detection-0.4.1646425229.tgz"
+  "version" "0.4.1646425229"
+
+"@mediapipe/face_mesh@~0.4.0":
+  "integrity" "sha512-Vc8cdjxS5+O2gnjWH9KncYpUCVXT0h714KlWAsyqJvJbIgUJBqpppbIx8yWcAzBDxm/5cYSuBI5p5ySIPxzcEg=="
+  "resolved" "https://registry.npmjs.org/@mediapipe/face_mesh/-/face_mesh-0.4.1633559619.tgz"
+  "version" "0.4.1633559619"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   "integrity" "sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g=="
   "resolved" "https://registry.npmjs.org/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz"
@@ -1601,6 +1611,33 @@
     "@svgr/plugin-svgo" "^4.3.1"
     "loader-utils" "^1.2.3"
 
+"@tensorflow-models/blazeface@0.0.5":
+  "integrity" "sha512-bIMJDV2CD8rr7v9OrIDdDZVh9sbk0EhlZdHaDFpgWUw3Lp21wUN7GSifOJVE5hV2ngmpzM+J12OH8bG1GZoDag=="
+  "resolved" "https://registry.npmjs.org/@tensorflow-models/blazeface/-/blazeface-0.0.5.tgz"
+  "version" "0.0.5"
+
+"@tensorflow-models/face-detection@~1.0.0":
+  "integrity" "sha512-oIEEqHy4qbkGn5xT1ldzwxK5s948+t7ts0+WoIfTPKwScpNa8YY4GJf+fpyhtOxUGGAZymXx25jrvF9YlAt9dg=="
+  "resolved" "https://registry.npmjs.org/@tensorflow-models/face-detection/-/face-detection-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "rimraf" "^3.0.2"
+
+"@tensorflow-models/face-landmarks-detection@^1.0.2":
+  "integrity" "sha512-e10xKlBssv2nYg8hV93rNg7ne8NIJVT9Y1d/bpUCcBpPLJpykLw2DQ3nfPnoBpqhKDykFtKDGQVmeXvqc7H+KA=="
+  "resolved" "https://registry.npmjs.org/@tensorflow-models/face-landmarks-detection/-/face-landmarks-detection-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "rimraf" "^3.0.2"
+
+"@tensorflow-models/facemesh@^0.0.5":
+  "integrity" "sha512-5zn3QxZfMEkUEXDQ1fqjKxK63WpwikwH/SuZpGiNkRjgronkbmCqc/UsLfAPrJjxqcyfRoO+u5fUuqhKe1wyTw=="
+  "resolved" "https://registry.npmjs.org/@tensorflow-models/facemesh/-/facemesh-0.0.5.tgz"
+  "version" "0.0.5"
+  dependencies:
+    "@tensorflow-models/blazeface" "0.0.5"
+    "rimraf" "^3.0.2"
+
 "@tensorflow-models/handpose@0.0.6":
   "integrity" "sha512-nUqNXmBKTZ14YFZJNj+0G26/CZnjP2t8yIeCiB73x+p1ROeQsqzKG55X8cQupBJsizNoZr4ayq5XRb3NivDfKA=="
   "resolved" "https://registry.npmjs.org/@tensorflow-models/handpose/-/handpose-0.0.6.tgz"
@@ -1616,6 +1653,26 @@
     "@types/seedrandom" "2.4.27"
     "seedrandom" "2.4.3"
 
+"@tensorflow/tfjs-backend-cpu@3.21.0":
+  "integrity" "sha512-88S21UAdzyK0CsLUrH17GPTD+26E85OP9CqmLZslaWjWUmBkeTQ5Zqyp6iK+gELnLxPx6q7JsNEeFuPv4254lQ=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.21.0.tgz"
+  "version" "3.21.0"
+  dependencies:
+    "@types/seedrandom" "^2.4.28"
+    "seedrandom" "^3.0.5"
+
+"@tensorflow/tfjs-backend-webgl@^3.12.0", "@tensorflow/tfjs-backend-webgl@^3.14.0":
+  "integrity" "sha512-N4zitIAT9IX8B8oe489qM3f3VcESxGZIZvHmVP8varOQakTvTX859aaPo1s8hK1qCy4BjSGbweooZe4U8D4kTQ=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.21.0.tgz"
+  "version" "3.21.0"
+  dependencies:
+    "@tensorflow/tfjs-backend-cpu" "3.21.0"
+    "@types/offscreencanvas" "~2019.3.0"
+    "@types/seedrandom" "^2.4.28"
+    "@types/webgl-ext" "0.0.30"
+    "@types/webgl2" "0.0.6"
+    "seedrandom" "^3.0.5"
+
 "@tensorflow/tfjs-backend-webgl@2.4.0":
   "integrity" "sha512-/wh2CmZ3G7XrzsYIg7C2/Wt/QxKpVOfm0yDI5eDrOBoaC+kUsD4avJTS64pCWOdAYSN3yHHJxWO7IySuRlw4+Q=="
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-2.4.0.tgz"
@@ -1628,12 +1685,12 @@
     "@types/webgl2" "0.0.4"
     "seedrandom" "2.4.3"
 
-"@tensorflow/tfjs-converter@^2.1.0", "@tensorflow/tfjs-converter@2.4.0":
+"@tensorflow/tfjs-converter@^1.5.2", "@tensorflow/tfjs-converter@^2.1.0", "@tensorflow/tfjs-converter@^3.12.0", "@tensorflow/tfjs-converter@^3.14.0", "@tensorflow/tfjs-converter@2.4.0":
   "integrity" "sha512-H16ydhoN/Ah7jd1NO4VUs8UGYbVs77yzUrTIGzras1ios2vsBMwFDC7+boIEekF+O/BcOgu26LtiU8n5hB4lrw=="
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-2.4.0.tgz"
   "version" "2.4.0"
 
-"@tensorflow/tfjs-core@^2.1.0", "@tensorflow/tfjs-core@2.4.0":
+"@tensorflow/tfjs-core@^1.5.2", "@tensorflow/tfjs-core@^2.1.0", "@tensorflow/tfjs-core@^3.12.0", "@tensorflow/tfjs-core@^3.14.0", "@tensorflow/tfjs-core@2.4.0", "@tensorflow/tfjs-core@3.21.0":
   "integrity" "sha512-2SJ4PG56e1hixcwdT0oWcfaAe0tfJU+WAKHVeQP1xor4bzPDE8N7LCnRdYWTXbl5mNXRZ9h5qb+XtGEQrcUrJg=="
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-2.4.0.tgz"
   "version" "2.4.0"
@@ -1845,6 +1902,11 @@
     "@types/prop-types" "*"
     "csstype" "^3.0.2"
 
+"@types/seedrandom@^2.4.28":
+  "integrity" "sha512-AnxLHewubLVzoF/A4qdxBGHCKifw8cY32iro3DQX9TPcetE95zBeVt3jnsvtvAUf1vwzMfwzp4t/L2yqPlnjkQ=="
+  "resolved" "https://registry.npmjs.org/@types/seedrandom/-/seedrandom-2.4.30.tgz"
+  "version" "2.4.30"
+
 "@types/seedrandom@2.4.27":
   "integrity" "sha1-nbVjk33YaRX2kJK8QyWdL0hXjkE="
   "resolved" "https://registry.npmjs.org/@types/seedrandom/-/seedrandom-2.4.27.tgz"
@@ -1880,6 +1942,11 @@
   "integrity" "sha512-PACt1xdErJbMUOUweSrbVM7gSIYm1vTncW2hF6Os/EeWi6TXYAYMPp+8v6rzHmypE5gHrxaxZNXgMkJVIdZpHw=="
   "resolved" "https://registry.npmjs.org/@types/webgl2/-/webgl2-0.0.4.tgz"
   "version" "0.0.4"
+
+"@types/webgl2@0.0.6":
+  "integrity" "sha512-50GQhDVTq/herLMiqSQkdtRu+d5q/cWHn4VvKJtrj4DJAjo1MNkWYa2MA41BaBO1q1HgsUjuQvEOk0QHvlnAaQ=="
+  "resolved" "https://registry.npmjs.org/@types/webgl2/-/webgl2-0.0.6.tgz"
+  "version" "0.0.6"
 
 "@types/yargs-parser@*":
   "integrity" "sha512-FA/BWv8t8ZWJ+gEOnLLd8ygxH/2UFbAvgEonyfN6yWGLKc7zVjbpl2Y4CTjid9h2RfgPP6SEt6uHwEOply00yw=="
@@ -9674,6 +9741,11 @@
     "@types/json-schema" "^7.0.5"
     "ajv" "^6.12.4"
     "ajv-keywords" "^3.5.2"
+
+"seedrandom@^3.0.5":
+  "integrity" "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg=="
+  "resolved" "https://registry.npmjs.org/seedrandom/-/seedrandom-3.0.5.tgz"
+  "version" "3.0.5"
 
 "seedrandom@~2.4.3", "seedrandom@2.4.3":
   "integrity" "sha1-JDhQTa0zkXMUv/GKxNeU8W1qrsw="
