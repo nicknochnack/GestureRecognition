@@ -1,3 +1,5 @@
+let threshold = 0.1;
+
 const parameterOfShape = (array) => {
   let p = 0;
   for (let i = 1; i < array.length; i++) {
@@ -64,7 +66,7 @@ export const evaluateCircle = (array) => {
   ///in perfect circle delta=1
   const delta = (area / (parameter * parameter)) * 4 * Math.PI;
 
-  if (Math.abs(delta - 1) < 0.1) {
+  if (Math.abs(delta - 1) < threshold) {
     return true;
   } else {
     return false;
@@ -82,7 +84,7 @@ export const evaluateSquare = (array) => {
   ///in perfect circle delta=1
   const delta = (area / (parameter * parameter)) * 16;
 
-  if (Math.abs(delta - 1) < 0.1) {
+  if (Math.abs(delta - 1) < threshold) {
     return true;
   } else {
     return false;
@@ -100,7 +102,7 @@ export const evaluateTriangle = (array) => {
   ///in perfect circle delta=1
   const delta = ((area / (parameter * parameter)) * 36) / Math.sqrt(3);
 
-  if (Math.abs(delta - 1) < 0.1) {
+  if (Math.abs(delta - 1) < threshold) {
     return true;
   } else {
     return false;
