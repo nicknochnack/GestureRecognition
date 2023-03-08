@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 //import * as facemesh from "@tensorflow-models/facemesh";
-import * as facemesh from "@tensorflow-models/face-landmarks-detection";
+import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
 import * as fp from "fingerpose";
 import Webcam from "react-webcam";
 import { evaluateCircle, evaluateSquare, evaluateTriangle } from "../utilities";
@@ -25,19 +25,21 @@ function Avatar() {
 
   const runHandpose = async () => {
 
-    const model = facemesh.SupportedModels.MediaPipeFaceMesh;
+    const model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
     const detectorConfig = {
-      runtime: "tfjs",
-      solutionPath: "https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh",
-    };
-    const net = await facemesh.load(model, detectorConfig);
-    //  Loop and detect hands
-    setInterval(() => {
-      detect(net);
-    }, 10);
-  };
+      runtime: 'mediapipe', // or 'tfjs'
+      solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh',
+    }
+    const detector = await faceLandmarksDetection.createDetector(model, detectorConfig);
+
+    setInterval(()=>{
+       detect(detector)
+    },10)
+  }
   const detect = async (net) => {
     // Check data is available
+ 
+    
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -51,6 +53,12 @@ function Avatar() {
       // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
+       console.log(video)
+      const hand= await net.estimateFaces(video);
+      console.log(hand);
+
+      return
+
       if (canvasRef != null && canvasRef.current != null) {
         canvasRef.current.width = videoWidth;
         canvasRef.current.height = videoHeight;
