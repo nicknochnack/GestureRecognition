@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
+import { evaluateCircle } from "./utilities";
 import "./App.css";
 function App() {
   const webcamRef = useRef(null);
@@ -54,14 +55,10 @@ function App() {
         ctx.closePath();
       }
       if (hand.length > 0) {
-        ///////// NEW STUFF ADDED GESTURE HANDLING
-
-        // Draw mesh
-
         let centerX = 0;
         let centerY = 0;
         let centerZ = 0;
-        // console.log(hand[0].landmarks);
+
         for (let [x, y, z] of hand[0].landmarks) {
           centerX += (640 - x) * 1;
           centerY += y * 1;
@@ -83,6 +80,10 @@ function App() {
           index = 0;
           array = [];
 
+          if (evaluateCircle(array)) {
+            ////@Enea add to the UI a pop up window  you draw a circle Good Job
+            console.log("You draw circle Good job");
+          }
           ///evaluate the shape
         }
         ctx.beginPath();
