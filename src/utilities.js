@@ -92,7 +92,7 @@ export const evaluateSquare = (array) => {
 export const evaluateTriangle = (array) => {
   ///calculate the area of the shape
   ///calculate the parameter of the shope
-  ///A/P^2  =1/16
+  ///A/P^2  =sqrt(3)/36
   const parameter = parameterOfShape(array);
   const [centerX, centerY] = centerOfShape(array);
   const area = areaOfShape(array, centerX, centerY);
