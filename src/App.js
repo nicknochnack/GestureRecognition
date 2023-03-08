@@ -1,16 +1,4 @@
-// 0. Install fingerpose npm install fingerpose
-// 1. Add Use State
-// 2. Import emojis and finger pose import * as fp from "fingerpose";
-// 3. Setup hook and emoji object
-// 4. Update detect function for gesture handling
-// 5. Add emoji display to the screen
-
-///////// NEW STUFF ADDED USE STATE
 import React, { useRef, useState, useEffect } from "react";
-///////// NEW STUFF ADDED USE STATE
-
-// import logo from './logo.svg';
-import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import "./App.css";
