@@ -4,6 +4,7 @@ import Avatar from "./pages/Avatar";
 import Shape from "./pages/Shape";
 import { Routes, Route } from "react-router-dom";
 function App() {
+  /**/
   return (
     <>
       <Routes>
