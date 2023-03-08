@@ -1,4 +1,4 @@
-const parameterOfCircle = (array) => {
+const parameterOfShape = (array) => {
   let p = 0;
   for (let i = 1; i < array.length; i++) {
     //dx              *    dx                    +       dy                *     dy
@@ -20,7 +20,7 @@ const areaOfTriangleWithThreeDots = (x1, y1, x2, y2, x3, y3) => {
   return area;
 };
 
-const areaOfCircle = (array, centerX, centerY) => {
+const areaOfShape = (array, centerX, centerY) => {
   let result = 0;
   for (let i = 1; i < array.length; i++) {
     ///center
@@ -40,7 +40,7 @@ const areaOfCircle = (array, centerX, centerY) => {
   return result;
 };
 
-const centerOfCircle = (array) => {
+const centerOfShape = (array) => {
   let centerX = 0;
   let centerY = 0;
   for (let { x, y } of array) {
@@ -57,11 +57,50 @@ export const evaluateCircle = (array) => {
   ///calculate the area of the shape
   ///calculate the parameter of the shope
   ///A/P^2  =1/(4*PI)
-  const parameter = parameterOfCircle(array);
-  const [centerX, centerY] = centerOfCircle(array);
-  const area = areaOfCircle(array, centerX, centerY);
+  const parameter = parameterOfShape(array);
+  const [centerX, centerY] = centerOfShape(array);
+  const area = areaOfShape(array, centerX, centerY);
+
+  ///in perfect circle delta=1
   const delta = (area / (parameter * parameter)) * 4 * Math.PI;
-  if (delta - 1 < 0.1) {
+
+  if (Math.abs(delta - 1) < 0.1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const evaluateSquare = (array) => {
+  ///calculate the area of the shape
+  ///calculate the parameter of the shope
+  ///A/P^2  =1/16
+  const parameter = parameterOfShape(array);
+  const [centerX, centerY] = centerOfShape(array);
+  const area = areaOfShape(array, centerX, centerY);
+
+  ///in perfect circle delta=1
+  const delta = (area / (parameter * parameter)) * 16;
+
+  if (Math.abs(delta - 1) < 0.1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const evaluateTriangle = (array) => {
+  ///calculate the area of the shape
+  ///calculate the parameter of the shope
+  ///A/P^2  =1/16
+  const parameter = parameterOfShape(array);
+  const [centerX, centerY] = centerOfShape(array);
+  const area = areaOfShape(array, centerX, centerY);
+
+  ///in perfect circle delta=1
+  const delta = ((area / (parameter * parameter)) * 36) / Math.sqrt(3);
+
+  if (Math.abs(delta - 1) < 0.1) {
     return true;
   } else {
     return false;

@@ -1,7 +1,11 @@
 import React, { useRef, useEffect } from "react";
+// import logo from './logo.svg';
+import * as tf from "@tensorflow/tfjs";
+
 import * as handpose from "@tensorflow-models/handpose";
+import * as fp from "fingerpose";
 import Webcam from "react-webcam";
-import { evaluateCircle } from "./utilities";
+import { evaluateCircle, evaluateSquare, evaluateTriangle } from "./utilities";
 import "./App.css";
 function App() {
   const webcamRef = useRef(null);
@@ -77,13 +81,17 @@ function App() {
           index > 5
         ) {
           console.log("close the shape");
+          if (evaluateCircle(array)) {
+            ////@Enea add to the UI a pop up window  you draw a circle Good Job
+            console.log("You draw circle Good job!!");
+          } else if (evaluateSquare(array)) {
+            console.log("you draw square Good job!!");
+          } else if (evaluateTriangle(array)) {
+            console.log("you draw triangle Good job!!");
+          }
           index = 0;
           array = [];
 
-          if (evaluateCircle(array)) {
-            ////@Enea add to the UI a pop up window  you draw a circle Good Job
-            console.log("You draw circle Good job");
-          }
           ///evaluate the shape
         }
         ctx.beginPath();
